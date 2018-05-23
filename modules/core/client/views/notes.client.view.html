@@ -3,7 +3,7 @@
         <form>
               <div class="form-group">
                 <label>Notepad Title</label>
-                <input class="form-control" ng-model="gistsCtl.notepadTitle" placeholder="My notepad title...">
+                <input class="form-control" ng-model="gistsCtl.notepadTitle" placeholder="{{gistsCtl.notePadTitle}}">
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">My Notes</label>
@@ -17,15 +17,19 @@
         </form>
 
         <section class="active-notes">
-            <form>
+          <div >
+                {{note.noteTitle}}
+                {{note.noteText}}
+            </div>
+            <form ng-repeat="note in gistsCtl.notes">
                   <div class="form-group">
-                    <input class="form-control" placeholder="Sample Note 1">
+                    <input class="form-control" placeholder="{{note.noteTitle}}">
                   </div>
                   <div class="form-group">
                     <label >Example textarea</label>
-                    <textarea class="form-control"  rows="7"></textarea>
+                    <textarea class="form-control"  rows="7" placeholder="{{note.noteText}}"></textarea>
                   </div>
-                  <button type="submit" class="btn btn-success">Add</button>
+                  <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </section>
     </div>  
@@ -33,7 +37,7 @@
     <div class="col-md-3 active-actions-wrapper">
         <div class="active-actions pull-right">
             <button type="submit" ng-click="gistsCtl.viewStats()" class="btn btn-outline-secondary" data-toggle="button">View Stats</button>
-            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save</button>
+            <button type="button" ng-click="gistsCtl.saveGist()" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save</button>
             <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Delete</button>
         </div>
     </div>   

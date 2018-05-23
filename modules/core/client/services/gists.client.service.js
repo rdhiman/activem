@@ -10,6 +10,25 @@
 
         updateGist(noteObject) {
             console.log(noteObject);
+            this.$http.post('https://api.github.com/gists/', {
+              "description": "POSTING FROM EXPRESS",
+              "public": true,
+              "files": {
+                "file1.txt": {
+                  "content": "EXPRESS "
+                }
+            }
+            })
+              .then(function (response) {
+                console.log(response);
+              })
+              .catch(function (error) { 
+                console.log(error);
+                });
+            // this.$http.post('https://api.github.com/gists/', 
+            //     {noteObject}).then((response) => {
+            //     console.log(response);
+            // });
         }
 
         getEventsJson(params = {}, stateParams = false) {
