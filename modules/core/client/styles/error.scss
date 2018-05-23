@@ -1,0 +1,56 @@
+.cal-404-main {
+	padding: 20px 50px;
+	text-align: center;
+}
+.cal-404-img {
+    background: url('../images/404_monster.png') no-repeat;
+	height: 269px;
+	width: 231px;
+    margin: 0 auto;
+}
+.cal-404-head {
+	color: #787878;
+    font-family: "Futura Today Demibold";
+    font-size: 56px;
+    letter-spacing: 1px;
+    margin: 0;
+    padding-top: 8px;
+}
+.cal-404-message {
+	color: #a6a6a6;
+    font-family: "Futura Today Light";
+    font-size: 20px;
+    margin: 0;
+    padding-bottom: 27px;
+}
+body a.cal-404-btn {
+	background: #009bff;
+    border-radius: 3px;
+    color: #fff;
+    font-family: "Futura Today";
+    font-size: 16px;
+    height: 40px;
+    margin: 0;
+    padding: 9px 39px;
+    text-decoration: none;
+    width: 220px;
+}
+body a.cal-404-btn:visited {
+    color: #fff;
+}
+body a.cal-404-btn:hover {
+    background: #3cb0fd;
+    color: #fff;
+    text-decoration: none;
+}
+@media only screen and (min-width: 980px) {
+	.cal-404-main {
+		overflow: auto;
+		padding: 50px 120px 50px 170px;
+		text-align: left;
+	}
+	.cal-404-img {
+		float: left;
+		margin-right: 54px;
+	}
+}

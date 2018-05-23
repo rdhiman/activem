@@ -1,0 +1,45 @@
+node('node') {
+  wrap([$class: 'TimestamperBuildWrapper']) {
+    try {
+      stage('deploy') {
+        deleteDir()
+        sh 'npm -v'
+        sh 'node -v'
+        sh 'printenv'
+
+        checkout scm
+        sh 'git clean -fd'
+        sh 'git submodule init && git submodule update'
+
+        def version = appVersion()
+        def environment = env.DEPLOY_ENVIRONMENT ?: "development";
+
+        currentBuild.description = "${DEPLOY_ENVIRONMENT} - ${version}"
+        echo "Deployment environment: ${environment} - Cincy Cal version: ${version}"
+
+        def startSlackMessage = "<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - Cincy Cal *${version}* started deployment to the *${DEPLOY_ENVIRONMENT}* environment"
+        slackSend channel: '#cincy-cal-redesign', color: '#439FE0', message: startSlackMessage, teamDomain: 'ldsn'
+
+        sh 'npm --prefix ldsn-node-deployment-client install ldsn-node-deployment-client'
+
+        stage('Deploy') {
+            deployments.deploy(version, "deploy_configs/${DEPLOY_ENVIRONMENT}.json")
+        }
+
+        def finishSlackMessage = "<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - Cincy Cal *${version}* has been deployed to the *${DEPLOY_ENVIRONMENT}* environment"
+        slackSend channel: '#cincy-cal-redesign', color: 'good', message: finishSlackMessage, teamDomain: 'ldsn'
+      }
+    } catch (Exception e) {
+      def version = appVersion()
+      def errorSlackMessage = "<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - Cincy Cal *${version}* FAILED deployment to the *${DEPLOY_ENVIRONMENT}* environment"
+      errorSlackMessage += " | Error: `${e.message}`"
+      slackSend channel: '#cincy-cal-redesign', color: 'danger', message: errorSlackMessage, teamDomain: 'ldsn'
+      throw e; // rethrow so the build is considered failed
+    }
+  }
+}
+
+def appVersion() {
+  return sh(returnStdout: true, script: "node -p \"require('./package.json').version\"").trim()
+}
+

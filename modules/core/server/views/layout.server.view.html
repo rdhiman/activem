@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <base href="/">
+    <title>{% if name %}{{name}} - {{title}}{% else %}{{title}}{% endif %}</title>
+    <meta name="description" content="{% if pageDescription %}{{pageDescription}}{% else %}{{description}}{% endif %}">
+    <meta name="fragment" content="!">
+    <meta property="og:url"content="http://{{domain}}/{{pageUrl}}">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{% if name %}{{name}} - {{title}}{% else %}{{title}}{% endif %}">
+    <meta property="og:description" content="{% if pageDescription %}{{pageDescription}}{% else %}{{description}}{% endif %}">
+    <meta property="og:image" content="{% if pageImage %}{{pageImage}}{% else %}http://{{domain}}/images/cincy_facebook.jpg{% endif %}">
+    <meta property="og:site_name" content="Cincinnati.com">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="shortcut icon" sizes="16x16" href="/images/favicon.png">
+    <link rel="shortcut icon" sizes="114x114" href="/images/native-ios-114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/images/native-ios-114.png">
+
+    {% for cssFile in cssFiles %}
+    <link rel="stylesheet" href="{{cssFile}}"> {% endfor %}
+    <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+    <script async='async' src='https://gannett-som-staticassets.s3.amazonaws.com/static/js/show_ads.js'></script>
+    {% if !chromeless %}
+    <script src="http://maw.gannettdigital.com/dist/js/maw.js"></script>
+    {% else %}
+    <script>window.chromeless = true;</script>
+    {% endif %}
+    <script>
+        var googletag = googletag || {};
+        googletag.cmd = googletag.cmd || [];
+    </script>
+</head>
+
+<body ad-block-test ng-app="cincy-cal" class="ng-cloak cal-body {% if chromeless %}chromeless{% endif %}">
+    <div id="fb-root"></div>
+    {% if !chromeless %}
+    <header id="cal-header-desktop" class=""></header>
+    <header resize-cobrand resize-cobrand-desktop="cal-header-desktop" resize-cobrand-mobile="cal-header-mobile" id="cal-header-mobile" class=""></header>
+    {% endif %}
+    <div class="cal-outside-wrapper">
+            {% block content %}{% endblock %}
+    </div>
+    {% if !chromeless %}
+    <footer id="cal-footer" class="cal-footer"></footer>
+    {% endif %}
+
+    {% for jsFile in jsFiles %}
+    <script type="text/javascript" src="{{jsFile}}"></script>{% endfor %} 
+    {% if livereload %}
+    <!--Livereload script rendered -->
+    <script type="text/javascript" src="{{host}}:35729/livereload.js"></script>
+    {% endif %}
+    {% if !chromeless %}
+    <script type="text/javascript">
+        MAW.footer('cal-footer','cincinnati',{'layout': 'footer-1'});
+    </script>
+    {% endif %}
+    <script src="//www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+    <script async='async' src='//connect.facebook.net/en_US/sdk.js'></script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({ 
+                appId: '{{facebookAppId}}',
+                status: true, 
+                cookie: true,
+                xfbml: true,
+                version: 'v2.4'
+            });
+        };
+    </script>
+    <script type="text/javascript" async='async' src="https://platform.twitter.com/widgets.js"></script>
+</body>
+
+</html>

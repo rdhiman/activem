@@ -1,0 +1,26 @@
+/* Base Color Palette - Do not use the $palette variables outside this file */
+$palette-black: #000;
+$palette-white: #fff;
+
+$palette-gray-100: #333;
+$palette-gray-90: #414141;
+$palette-gray-80: #585858;
+$palette-gray-70: #6f6f6f;
+$palette-gray-50: #939598;
+$palette-gray-40: #bdbdbd;
+$palette-gray-30: #ccc;
+$palette-gray-20: #e6e6e6;
+$palette-gray-10: #f6f6f6;
+
+/* Color Scheme - Use the $color variables below */
+$color-black: $palette-black;
+$color-white: $palette-white;
+
+$color-body-background: $palette-gray-10;
+
+$color-almost-black:#222;
+$color-light-gray: #aaa;
+$color-gray: #777;
+$color-blue: #009bff;
+$color-blue-hover: lighten($color-blue, 5%);
+$color-purple: #741784;

@@ -1,0 +1,41 @@
+<section class="cal-main">
+
+    <p class="cal-venue-back">
+        <a href="/{{::'?' | chromeless}}" class="cal-link cal-back-link"><span class="cal-desktop">Back to all events</span></a>
+    </p>
+
+    <div class="cal-venue-wrapper">
+        <div ng-class="{'cal-venue-photo-wrapper': true, 'cal-has-photo': venueCtl.venue.venuePhoto}">
+            <h1 class="cal-heading cal-venue-title"><span class="cal-title-span cal-desktop">Events at</span> <span ng-bind-html="::venueCtl.venue.venueName"></span></h1>
+            <figure class="cal-photo-container cal-crop" id="cal-photo-top" ng-if="venueCtl.venue.venuePhoto">
+                <img ng-src="{{::venueCtl.venue.venuePhoto}}" alt="{{::venueCtl.venue.venueName}}" class="cal-photo-main">
+            </figure>
+        </div>
+        <div class="cal-item-wrapper">
+            <p class="cal-description" ng-if="venueCtl.venue.venueDescription" ng-bind-html="::venueCtl.venue.venueDescription"></p>
+            <p class="cal-listing-item cal-contact" ng-if="venueCtl.venue.venuePhone || venueCtl.venue.venueURL">
+                <span ng-if="venueCtl.venue.venuePhone">Call {{::venueCtl.venue.venuePhone}}</span> 
+                {{venueCtl.venue.venuePhone && venueCtl.venue.venueURL ? ' or ' : ''}} 
+                <a ng-if="venueCtl.venue.venueURL" ng-href="http://{{::venueCtl.venue.venueURL}}" class="cal-link">visit website</a>
+            </p>
+            <p class="cal-listing-item cal-address" ng-if="venueCtl.venue.venueAddress">
+                <span class="cal-pres-street" ng-bind-html="::venueCtl.venue.venueAddress"></span><br>
+                <span class="cal-pres-locality">{{::venueCtl.venue.venueCity}}, {{::venueCtl.venue.venueState}} {{::venueCtl.venue.venueZip}}</span><br>
+                <span class="cal-pres-directions"><a ng-href="{{::venueCtl.venue.directionsLink}}" class="cal-link">Get directions</a></span>
+            </p>
+        </div>
+    </div>
+
+    <search-filters total-events="{{venueCtl.totalEvents}}"></search-filters>
+
+    <div date-pinner>
+        <div class="cal-date-tag-wrapper" ng-repeat="eventItem in venueCtl.events" ng-include="'core/client/views/eventslisting.client.view.html'"></div>
+    </div>
+
+</section>
+
+<section class="cal-right-col cal-results-right cal-desktop">
+
+    <default-sidebar weekend-events="venueCtl.weekendEvents"></default-sidebar>
+
+</section>

@@ -1,0 +1,294 @@
+{
+  "docker": [
+    {
+      "scalr": {
+        "farm": {
+          "environment": "Gannett Digital Staging",
+          "id": 3751,
+          "role_id": 11474,
+          "lb_role_id": 20188
+        }
+      },
+      "docker": {
+        "external_ports": [
+          {
+            "container_port": 443,
+            "protocol": "TCP",
+            "name": "web"
+          }
+        ],
+        "app_name": "ldsn-cincy-cal",
+        "docker_environment": "staging",
+        "manager_hostname": "https://3751-11451-scalr.staging.gannettdigital.com",
+        "kubernetes_deployment": {
+          "apiVersion": "extensions/v1beta1",
+          "kind": "Deployment",
+          "metadata": {
+            "name": "ldsn-cincy-cal-scalr-staging-east"
+          },
+          "spec": {
+            "replicas": 2,
+            "template": {
+              "metadata": {
+                "labels": {
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "name": "nginx-lite",
+                    "image": "paas-docker-artifactory.gannettdigital.com/nginx-lite:1.11.3-3",
+                    "env": [
+                      {
+                        "name": "APPLICATION_PORT",
+                        "value": "3000"
+                      }
+                    ],
+                    "ports": [
+                      {
+                        "containerPort": 443
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "15m",
+                        "memory": "10Mi"
+                      },
+                      "limits": {
+                        "cpu": "20m",
+                        "memory": "20Mi"
+                      }
+                    }
+                  },
+                  {
+                    "name": "ldsn-cincy-cal",
+                    "image": "ldsn-docker-artifactory.gannettdigital.com/ldsn-cincy-cal:{{IMAGE_TAG}}",
+                    "env": [
+                      {
+                        "name":"MONGO_URI",
+                        "valueFrom":{
+                          "secretKeyRef": {
+                            "name":"cincycal",
+                            "key":"mongo.staging.east.uri"
+                          }
+                        }
+                      },
+                      {
+                        "name": "NODE_ENV",
+                        "valueFrom": {
+                          "configMapKeyRef": {
+                            "name": "scalr-envs",
+                            "key": "ENVIRONMENT"
+                          }
+                        }
+                      },
+                      {
+                        "name": "HOST",
+                        "valueFrom": {
+                          "configMapKeyRef": {
+                            "name": "scalr-envs",
+                            "key": "SCALR_REGION"
+                          }
+                        }
+                      }
+                    ],
+                    "ports": [
+                      {
+                        "containerPort": 3000
+                      }
+                    ],
+                    "readinessProbe": {
+                      "httpGet": {
+                        "path": "/status/environment",
+                        "port": 3000
+                      },
+                      "initialDelaySeconds": 10,
+                      "periodSeconds": 5
+                    },
+                    "livenessProbe": {
+                      "httpGet": {
+                        "path": "/status/environment",
+                        "port": 3000
+                      },
+                      "initialDelaySeconds": 10,
+                      "periodSeconds": 3
+                    },
+                    "resources": {
+                      "requests": {
+                        "cpu": "200m",
+                        "memory": "400Mi"
+                      },
+                      "limits": {
+                        "cpu": "200m",
+                        "memory": "400Mi"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "auto_scaling": {
+          "min": 2,
+          "max": 6,
+          "cpu_percent": 60
+        }
+      },
+      "validation": {
+        "http": [
+          {
+            "expected_code": 200,
+            "ssl": true,
+            "uri": "/status/environment"
+          }
+        ]
+      }
+    },
+    {
+      "scalr": {
+        "farm": {
+          "environment": "Gannett Digital Staging",
+          "id": 3754,
+          "role_id": 11471,
+          "lb_role_id": 20189
+        }
+      },
+      "docker": {
+        "external_ports": [
+          {
+            "container_port": 443,
+            "protocol": "TCP",
+            "name": "web"
+          }
+        ],
+        "app_name": "ldsn-cincy-cal",
+        "docker_environment": "staging",
+        "manager_hostname": "https://3754-11456-scalr.staging.gannettdigital.com",
+        "kubernetes_deployment": {
+          "apiVersion": "extensions/v1beta1",
+          "kind": "Deployment",
+          "metadata": {
+            "name": "ldsn-cincy-cal-scalr-staging-west"
+          },
+          "spec": {
+            "replicas": 2,
+            "template": {
+              "metadata": {
+                "labels": {
+                }
+              },
+              "spec": {
+                "containers": [
+                  {
+                    "name": "nginx-lite",
+                    "image": "paas-docker-artifactory.gannettdigital.com/nginx-lite:1.11.3-3",
+                    "env": [
+                      {
+                        "name": "APPLICATION_PORT",
+                        "value": "3000"
+                      }
+                    ],
+                    "ports": [
+                      {
+                        "containerPort": 443
+                      }
+                    ],
+                    "resources": {
+                      "requests": {
+                        "cpu": "15m",
+                        "memory": "10Mi"
+                      },
+                      "limits": {
+                        "cpu": "20m",
+                        "memory": "20Mi"
+                      }
+                    }
+                  },
+                  {
+                    "name": "ldsn-cincy-cal",
+                    "image": "ldsn-docker-artifactory.gannettdigital.com/ldsn-cincy-cal:{{IMAGE_TAG}}",
+                    "env": [
+                      {
+                        "name":"MONGO_URI",
+                        "valueFrom":{
+                          "secretKeyRef": {
+                            "name":"cincycal",
+                            "key":"mongo.staging.west.uri"
+                          }
+                        }
+                      },
+                      {
+                        "name": "NODE_ENV",
+                        "valueFrom": {
+                          "configMapKeyRef": {
+                            "name": "scalr-envs",
+                            "key": "ENVIRONMENT"
+                          }
+                        }
+                      },
+                      {
+                        "name": "HOST",
+                        "valueFrom": {
+                          "configMapKeyRef": {
+                            "name": "scalr-envs",
+                            "key": "SCALR_REGION"
+                          }
+                        }
+                      }
+                    ],
+                    "ports": [
+                      {
+                        "containerPort": 3000
+                      }
+                    ],
+                    "readinessProbe": {
+                      "httpGet": {
+                        "path": "/status/environment",
+                        "port": 3000
+                      },
+                      "initialDelaySeconds": 10,
+                      "periodSeconds": 5
+                    },
+                    "livenessProbe": {
+                      "httpGet": {
+                        "path": "/status/environment",
+                        "port": 3000
+                      },
+                      "initialDelaySeconds": 10,
+                      "periodSeconds": 3
+                    },
+                    "resources": {
+                      "requests": {
+                        "cpu": "200m",
+                        "memory": "400Mi"
+                      },
+                      "limits": {
+                        "cpu": "200m",
+                        "memory": "400Mi"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "auto_scaling": {
+          "min": 2,
+          "max": 6,
+          "cpu_percent": 60
+        }
+      },
+      "validation": {
+        "http": [
+          {
+            "expected_code": 200,
+            "ssl": true,
+            "uri": "/status/environment"
+          }
+        ]
+      }
+    }
+  ]
+}

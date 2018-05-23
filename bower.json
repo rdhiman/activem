@@ -1,0 +1,27 @@
+{
+  "name": "cincy-cal",
+  "description": "",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/CraigJohnson/home.dev",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-resource": "^1.5.7",
+    "angular-animate": "^1.5.7",
+    "angular-moment": "0.10.3",
+    "angular-ui-router": "^0.3.1",
+    "angular-bootstrap": "^1.3.3",
+    "lodash": "^4.13.1",
+    "angular-cookies": "^1.5.7",
+    "angular-touch": "^1.5.7",
+    "angular-sanitize": "^1.5.7",
+    "angular-mocks": "^1.5.7",
+    "jquery": "2.2.4",
+    "moment": ">=2.8.0 <2.11.0",
+    "ngDfp": "^0.14.0",
+    "angular-recaptcha": "^3.0.4",
+    "bootstrap": "^3.3.7"
+  },
+  "resolutions": {
+    "angular": "~1.6"
+  }
+}

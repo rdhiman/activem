@@ -1,0 +1,25 @@
+<span class="cal-form-text cal-form-or">or</span>
+<input uib-datepicker-popup="{{datepickers.format}}"
+    datepicker-append-to-body="true"
+    show-button-bar="false"
+    type="text" 
+    class="cal-form-input cal-input-short cal-input-date" 
+    is-open="datepickers.start.opened"
+    datepicker-options="datepickers.options"
+    id="cal-date-start" 
+    placeholder="Start date" 
+    ng-model="formdata.startDate" 
+    ng-focus="open('start'); clearDateRadios()">
+
+<span class="cal-form-text cal-form-to cal-mobile">to</span>
+<input uib-datepicker-popup="{{datepickers.format}}"
+    datepicker-append-to-body="true"
+    show-button-bar="false"
+    type="text" 
+    class="cal-form-input cal-input-short cal-input-date" 
+    is-open="datepickers.end.opened"
+    datepicker-options="datepickers.options"
+    id="cal-date-end" 
+    placeholder="End date" 
+    ng-model="formdata.endDate" 
+    ng-focus="open('end'); clearDateRadios()">

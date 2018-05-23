@@ -1,0 +1,76 @@
+*~
+# Ignore OSX file system object
+.DS_Store
+.nodemonignore
+.sass-cache/
+
+# Ignore npm log file
+npm-debug.log
+
+# Ignore Express log
+access.log
+
+# Ignore Node Modules
+/node_modules/
+
+# Ignore bower libraries
+public/lib
+
+# Ignore compiled js files
+public/dist
+
+# Ignore copied images
+public/images
+
+# Ignore test output folder
+# test/
+
+# Ignore Bower temp folders
+.bower-*/
+
+# Ignore Intellij project folder
+.idea/*
+
+# Ignore Visual Studio Code project folder
+.vscode/*
+
+# Ignore Intellij JIRA plugin
+atlassian-ide-plugin.xml
+
+# Allow Intellij codeStyleSettings
+!.idea/codeStyleSettings.xml
+# Allow Intellij jsLinters
+!.idea/jsLinters/
+# Allow Intellij inspectionProfiles
+!.idea/inspectionProfiles/
+
+# Ignore nock generated missing files
+*.missing
+
+# Ignore Text Editor temp files
+*.swp
+*.kate-swp
+.sublime-grunt.cache
+
+# Ignore custom environment configurations
+.env
+
+# Ignore local pre-compilers
+*.jiphy
+
+# ignore editor configs
+.jsbeautifyrc
+
+test-results.xml
+
+# Ignore css complied files
+# Some are hard coded until all css is converted to scss files
+*.css.map
+**/sass/*.css
+
+#Ignore MongoDB data
+data/db/
+
+#Ignore the following test files and directories
+./test/*.log
+./test/*_reports

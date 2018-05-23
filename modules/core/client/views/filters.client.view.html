@@ -1,0 +1,129 @@
+<style type="text/css">
+    .cal-filters-badge:after {
+        content: "{{numMobileFilters}}";
+    }
+    .cal-desktop .cal-filters-badge:after {
+        content: "{{numDesktopFilters}}";
+    }
+</style>
+<div class="cal-results-header">
+    <p class="cal-results-heading" ng-hide="showMobileFilters">{{totalEvents | number}} events found</p>
+    <p class="cal-filters-heading" ng-show="showMobileFilters">Filter events</p>
+    <a href="" ng-class="{'cal-mobile': true, 'cal-filter-button': true, 'cal-filters-open': !showMobileFilters, 'cal-filters-badge': numMobileFilters}" id="cal-filter-button" ng-click="toggleMobileFilters()">{{mobileExpandText || "Filter"}}</a>
+    <p class="cal-submit cal-desktop"><a href="http://local.cincinnati.com/share/" class="cal-link">Submit an event</a></p>
+</div>
+<div class="cal-filters-wrapper" ng-show="showMobileFilters">
+    <form novalidate>
+        <div class="cal-filters-section">
+            <h2 class="cal-heading cal-filter-heading cal-heading-date">Find Events Happening</h2>
+            <div class="cal-segmented">
+                <input type="radio" name="cal-form-date" value="today" id="cal-date-1" ng-model="formdata.date" ng-change="updateDateRange('today')">
+                <label for="cal-date-1">Today</label>
+
+                <input type="radio" name="cal-form-date" value="weekend" id="cal-date-2" ng-model="formdata.date" ng-change="updateDateRange('weekend')">
+                <label for="cal-date-2">This weekend</label>
+
+                <input type="radio" name="cal-form-date" value="week" id="cal-date-3" ng-model="formdata.date" ng-change="updateDateRange('week')">
+                <label for="cal-date-3">This week</label>
+                <input type="radio" name="cal-form-date" value="custom" id="cal-date-4" ng-model="formdata.date">
+            </div>
+
+            <div class="cal-date-wrapper input-group" ng-include="datepickers.template"></div>
+        </div>
+
+        <div class="cal-filters-expanded" ng-show="showDesktopFilters">
+
+            <div class="cal-filters-section cal-filters-section-checkboxes">
+                <h2 class="cal-heading cal-filter-heading cal-heading-cat">Types of Events</h2>
+                <ul class="cal-checkbox-controls cal-desktop">
+                    <li class="cal-control-item"><a href="" ng-click="checkAllCheckboxes()" class="cal-link" id="cal-check-all">Check all</a></li>
+                    <li class="cal-control-item"><a href="" ng-click="clearAllCheckboxes()" class="cal-link" id="cal-check-none">Clear</a></li>
+                </ul>
+
+                <div class="cal-checkboxes">
+                    <input type="checkbox"
+                           id="cal-all"
+                           class="cal-mobile"
+                           ng-change="updateCheckboxes('all')"
+                           ng-model="allCheckbox">
+                    <label class="cal-mobile"
+                           for="cal-all">All</label>
+                    <input type="checkbox"
+                           id="cal-cat-{{$index}}"
+                           ng-repeat-start="category in categoryTree"
+                           ng-class="{'cal-mobile':(category == 'All')}"
+                           ng-change="updateCheckboxes()"
+                           ng-model="formdata.superCategories[category.SuperCatID]">
+                    <label for="cal-cat-{{$index}}" ng-repeat-end>{{category.SuperCat}}</label>
+                </div>
+                
+            </div>
+
+            <div ng-show="subCategories.length" class="cal-filters-section cal-filters-section-subcategory">
+                <h2 class="cal-heading cal-filter-heading cal-heading-cat">Additional Categories<a href="" ng-click="toggleHiddenSubcategories()" class="cal-link cal-mobile toggle-hidden-subcategories" id="cal-show-subcategories-mobile">{{showSubcategories ? 'hide' : 'show'}}</a></h2>
+                    <ul class="cal-checkbox-controls cal-desktop cal-subcat-checkbox-hide-show">
+                        <li class="cal-control-item"><a href="" ng-click="toggleHiddenSubcategories()" class="cal-link" id="cal-show-subcategories">{{showSubcategories ? 'hide' : 'show'}}</a></li>
+                    </ul>
+                    <ul class="cal-checkbox-subcats-controls cal-checkbox-controls cal-desktop" ng-show="showSubcategories">
+                        <li class="cal-control-item"><a href="" ng-click="checkAllSubcategoryCheckboxes()" class="cal-link" id="cal-check-all">Check all</a></li>
+                        <li class="cal-control-item"><a href="" ng-click="clearAllSubcategoryCheckboxes()" class="cal-link" id="cal-check-none">Clear</a></li>
+                    </ul>
+                    <div class="cal-checkboxes" ng-show="showSubcategories">
+                        <input type="checkbox"
+                               id="cal-subcategory-all"
+                               class="cal-mobile"
+                               ng-change="updateSubcategoryCheckboxes('all')"
+                               ng-model="allSubCategoriesCheckbox">
+                        <label class="cal-mobile"
+                               for="cal-subcategory-all">All</label>
+                        <input type="checkbox"
+                               id="cal-subcat-{{$index}}"
+                               ng-repeat-start="subCategory in subCategories"
+                               ng-class="{'cal-mobile':(category == 'All')}"
+                               ng-change="updateSubcategoryCheckboxes()"
+                               ng-model="formdata.subCategories[subCategory.catID]">
+                        <label for="cal-subcat-{{$index}}" ng-repeat-end>{{subCategory.catName}}</label>
+                    </div>
+            </div>
+
+            <div class="cal-filters-section cal-filters-neighborhood">
+                <h2 class="cal-heading cal-filter-heading cal-heading-loc">Location</h2>
+
+                <input type="text" 
+                    class="cal-form-input cal-input-full" 
+                    id="cal-loc-1" 
+                    placeholder="neighborhood or zip code" 
+                    ng-model="formdata.neighborhood"
+                    clear-input-change="updateNumFilters()"
+                    clear-input
+                    uib-typeahead="hood for hood in neighborhoods | filter:$viewValue | limitTo:6">
+            </div>
+
+            <div class="cal-filters-section">
+                <h2 class="cal-heading cal-filter-heading cal-heading-search">Search for</h2>
+                <input type="text" 
+                    class="cal-form-input cal-input-full" 
+                    id="cal-key-1" 
+                    placeholder="keywords (optional)" 
+                    ng-model="formdata.keywords"
+                    clear-input-change="updateNumFilters()"
+                    clear-input>
+            </div>
+
+        </div>
+
+        <div class="cal-mobile">
+            <input type="submit" value="Search" class="cal-button" ng-click="refilter()" 
+                ng-disabled="formdata.startDate && !formdata.endDate">
+        </div>
+        <div class="cal-desktop">
+            <input type="submit" value="Search" class="cal-button" ng-click="refilter()"
+                ng-disabled="formdata.startDate && !formdata.endDate">
+        </div>
+
+        <p class="cal-button-wrapper cal-desktop" id="cal-more-filters">
+            <a href="" ng-click="toggleDesktopFilters()" ng-class="{'cal-button': true, 'cal-more-filters': true, 'cal-filters-open': showDesktopFilters}">
+                <span ng-class="{'cal-filters-badge': numDesktopFilters}">{{desktopExpandText || "More Filters"}}</span></a>
+        </p>
+    </form>
+</div>

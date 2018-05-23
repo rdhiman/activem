@@ -1,0 +1,38 @@
+#!/usr/bin/env groovy
+node('docker && node') {
+    stage('Git Checkout') {
+        checkout scm
+    }
+
+    sh 'git clean -fd'
+    sh 'git config user.name "LDSNJenkins"'
+    sh 'git config user.email "rcopley@gannett.com"'
+
+    gitUtils.resetTags()
+
+    sh 'npm version patch'
+
+    def appVersion = sh(returnStdout: true, script: "node -p \"require('./package.json').version\"").trim()
+    currentBuild.description = appVersion
+    echo "App version: ${appVersion}"
+
+    stage('Docker build') {
+        docker.withRegistry('https://ldsn-docker-artifactory.gannettdigital.com/ldsn-docker', 'docker-artifactory') {
+            def image = docker.build('ldsn-cincy-cal')
+            image.push(appVersion)
+            image.push('latest')
+        }
+    }
+
+    sshagent(['LDSNJenkinsCincy']) {
+        sh "git pull origin master"
+        sh "git push origin HEAD:master --follow-tags"
+    }
+
+    build job: 'cincy-cal-deploy', parameters: [[$class: 'ExtendedChoiceParameterValue', name: 'DEPLOY_ENVIRONMENT', value: 'development']], wait: false
+
+
+    def slackMessage = "<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - Cincy Cal *${appVersion}* Docker image has been built and pushed to Artifactory\n"
+    slackMessage += "It can be ran locally via `docker run ldsn-docker-artifactory.gannettdigital.com/ldsn-cincy-cal:${appVersion}`"
+    slackSend channel: '#cincy-cal-redesign', color: 'good', message: slackMessage, teamDomain: 'ldsn'
+}

@@ -1,0 +1,5 @@
+local: LOCAL=true --format pretty
+sauce: SAUCE_LABS=true --format pretty --format junit --out 'test_reports'
+parallel: SAUCE_LABS=true --format progress --format junit --out <%= ENV['JUNIT_DIR']%><%= ENV['TEST_ENV_NUMBER']%> --format ParallelTests::Cucumber::FailuresLogger --out <%= ENV['FAILED_TESTS']%>
+ignore: --tags ~@ignore
+jenkins: --format junit --out <%= ENV['JUNIT_DIR']%><%= ENV['TEST_ENV_NUMBER']%>

@@ -1,0 +1,217 @@
+<article ng-class="{'cal-listing-main': true, 'cal-has-photo': eventDetailsCtl.event.apiVenue.venuePhoto}"> 
+		
+    <div class="cal-listing-wrapper cal-top-wrapper" itemscope itemtype="http://schema.org/Event">
+
+        <p class="cal-subheading cal-cat cal-listing-cat"><span class="cal-sub-label">{{::eventDetailsCtl.event.catName}}</span></p>
+
+        <h1 class="cal-heading cal-listing-title" itemprop="name">{{::eventDetailsCtl.event.prodName}}</h1>
+
+        <p class="cal-presenter" ng-if="eventDetailsCtl.event.apiPresenter.presName" itemprop="organizer">Presented by {{::eventDetailsCtl.event.apiPresenter.presName}}</p>
+
+        <ul class="cal-share-list cal-desktop">
+            <li class="cal-share-item"><facebook-share url="{{::eventDetailsCtl.pageUrl}}" name="{{::eventDetailsCtl.event.prodName}}" desc="{{eventDetailsCtl.event.prodDescription}}" image="{{::eventDetailsCtl.event.apiVenue.venuePhoto}}"></facebook-share></li>
+            <li class="cal-share-item"><a ng-href="https://twitter.com/intent/tweet?url={{::eventDetailsCtl.bitlyShareUrl}}&text=Check%20out%20{{::eventDetailsCtl.event.prodName}}%3A&via=ENQThingsToDo" class="cal-share-link cal-share-tw" target="_blank"><span class="cal-share-name">Twitter</span></a></li>
+        </ul>
+
+        <figure class="cal-photo-container cal-crop" id="cal-photo-top" ng-if="eventDetailsCtl.event.apiVenue.venuePhoto">
+            <img ng-src="{{::eventDetailsCtl.event.apiVenue.venuePhoto}}" alt="{{::eventDetailsCtl.event.apiVenue.venueName}}" class="cal-photo-main" itemprop="image">
+        </figure>
+
+        <div class="cal-item-wrapper">
+
+            <p class="cal-description" ng-if="eventDetailsCtl.event.prodDescription || eventDetailsCtl.event.firstEvent.eventNotes" itemprop="description">
+                <span ng-if="eventDetailsCtl.event.prodDescription">
+                    {{::eventDetailsCtl.event.prodDescription}}
+                    {{::eventDetailsCtl.event.benefitFor ? 'Benefits: ' + eventDetailsCtl.event.benefitFor : ''}}
+                </span>  
+                <span ng-if="eventDetailsCtl.event.firstEvent.eventNotes">
+                    {{::eventDetailsCtl.event.firstEvent.eventNotes}}
+                </span>
+            </p>
+            <p class="cal-listing-item cal-contact" ng-if="eventDetailsCtl.phone || eventDetailsCtl.event.prodURL">
+                <span ng-if="eventDetailsCtl.phone">Call <span itemprop="telephone">{{::eventDetailsCtl.phone}}</span></span>
+                {{(eventDetailsCtl.phone && eventDetailsCtl.event.prodURL) ? ' or ' : ''}}
+                <a ng-href="http://{{::eventDetailsCtl.event.prodURL}}" class="cal-link" ng-if="eventDetailsCtl.event.prodURL" itemprop="url">visit website</a>
+            </p>
+
+            <p class="cal-listing-item cal-event-date" ng-if="eventDetailsCtl.event.firstEvent">
+                <span itemprop="startDate" content="{{::eventDetailsCtl.event.firstEvent.eventStartDate | date:'yyyy-MM-ddTHH:mm'}}"></span>
+                <span itemprop="endDate" content="{{::eventDetailsCtl.event.firstEvent.eventEndDate | date:'yyyy-MM-ddTHH:mm'}}"></span>
+                {{::eventDetailsCtl.event.firstEvent.eventStartDate | date:"EEE'.,' MMMM d" | abbreviateMonth}}
+                {{eventDetailsCtl.event.firstEvent.eventEndTime ? ' from ' : ' at ' }}
+                {{::eventDetailsCtl.event.firstEvent.eventStartTime | trimHour | lowercaseAMPM}}
+                {{eventDetailsCtl.event.firstEvent.eventEndTime ? ' - ' : '' }}
+                {{::eventDetailsCtl.event.firstEvent.eventEndTime | trimHour | lowercaseAMPM}}
+                <span class="cal-more-dates" ng-if="eventDetailsCtl.event.moreDatesCount > 0">
+                    <a href="" ng-click="eventDetailsCtl.showFutureDates = true" class="cal-link" id="cal-show-more-dates">+ {{::eventDetailsCtl.event.moreDatesCount}} more dates</a>
+                </span>
+            </p>
+
+            <div class="cal-more-dates-wrapper cal-dates-overlay" ng-show="eventDetailsCtl.showFutureDates" ng-if="eventDetailsCtl.event.moreDatesCount > 0">
+                <a href="" class="cal-close-button" id="cal-close-more-dates" ng-click="eventDetailsCtl.showFutureDates = false">Close</a>
+                <div class="cal-more-dates-inner cal-dates-overlay">
+                    <h2 class="cal-heading cal-date-title">All dates for {{::eventDetailsCtl.event.prodName}}</h2>
+                    <ul class="cal-date-list">
+
+                        <li class="cal-date-item" ng-repeat="futureEvent in eventDetailsCtl.futureEvents" ng-if="futureEvent.eventStartDate">
+                            <span class="cal-date-date">{{::futureEvent.eventStartDate | date: "EEE'.,' MMMM d" | abbreviateMonth}}</span>
+                            <span class="cal-date-time">{{::futureEvent.eventStartTime | trimHour | lowercaseAMPM}}{{futureEvent.eventEndTime ? ' - ' : '' }}{{::futureEvent.eventEndTime | trimHour | lowercaseAMPM}}</span>
+                            <span class="cal-date-add">
+                                <span class="addtocalendar atc-style-icon atc-style-menu-wb">
+                                    <a class="cal-add-link atcb-link" data-prop41="addToCalendar">Add to calendar</a>
+                                    <var class="atc_event">
+                                        <var class="atc_date_start">{{::futureEvent.eventStartDate | date:"yyyy-MM-dd HH:mm:ss"}}</var>
+                                        <var class="atc_date_end">{{::futureEvent.eventEndDate | date:"yyyy-MM-dd HH:mm:ss"}}</var>
+                                        <var class="atc_timezone">America/New_York</var>
+                                        <var class="atc_title">{{::eventDetailsCtl.event.prodName}}</var>
+                                        <var class="atc_description" ng-if="eventDetailsCtl.event.prodDescription" ng-bind-html="::eventDetailsCtl.event.prodDescription"></var>
+                                        <var class="atc_location" ng-if="eventDetailsCtl.event.apiVenue.venueAddress">{{::eventDetailsCtl.event.apiVenue.venueAddress}} {{::eventDetailsCtl.event.apiVenue.venueCity}}, {{::eventDetailsCtl.event.apiVenue.venueState}} {{::eventDetailsCtl.event.apiVenue.venueZip}}</var>
+                                        <var class="atc_organizer" ng-if="eventDetailsCtl.event.apiPresenter.presName">{{::eventDetailsCtl.event.apiPresenter.presName}}</var>
+                                    </var>
+                                </span>
+                            </span>
+                            <span ng-if="futureEvent.eventNotes" class="cal-date-notes">{{::futureEvent.eventNotes}}</span>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <ul class="cal-action-list">
+
+                <li class="cal-action-item" ng-if="eventDetailsCtl.event.firstEvent.eventStartDate">
+                    <span class="addtocalendar atc-style-blue">
+                        <var class="atc_event">
+                            <var class="atc_date_start">{{::eventDetailsCtl.event.firstEvent.eventStartDate | date:"yyyy-MM-dd HH:mm:ss"}}</var>
+                            <var class="atc_date_end">{{::eventDetailsCtl.event.firstEvent.eventEndDate | date:"yyyy-MM-dd HH:mm:ss"}}</var>
+                            <var class="atc_timezone">America/New_York</var>
+                            <var class="atc_title">{{::eventDetailsCtl.event.prodName}}</var>
+                            <var class="atc_description" ng-if="eventDetailsCtl.event.prodDescription" ng-bind-html="::eventDetailsCtl.event.prodDescription"></var>
+                            <var class="atc_location" ng-if="eventDetailsCtl.event.apiVenue.venueAddress">{{::eventDetailsCtl.event.apiVenue.venueAddress}} {{::eventDetailsCtl.event.apiVenue.venueCity}}, {{::eventDetailsCtl.event.apiVenue.venueState}} {{::eventDetailsCtl.event.apiVenue.venueZip}}</var>
+                            <var class="atc_organizer" ng-if="eventDetailsCtl.event.apiPresenter.presName">{{::eventDetailsCtl.event.apiPresenter.presName}}</var>
+                        </var>
+                    </span>
+                </li>
+
+                <li class="cal-action-item cal-mobile"><a href="" ng-class="{'cal-link cal-action-link cal-action-share':true, 'cal-share-open':showMobileShare}" id="cal-share-mobile-link" ng-click="showMobileShare = !showMobileShare">Share event</a>
+                    <ul class="cal-share-list cal-mobile" id="cal-share-mobile" ng-show="showMobileShare">
+                        <li class="cal-share-item"><facebook-share url="{{::eventDetailsCtl.pageUrl}}" name="{{::eventDetailsCtl.event.prodName}}" desc="{{eventDetailsCtl.event.prodDescription}}" image="{{::eventDetailsCtl.event.apiVenue.venuePhoto}}"></facebook-share></li>
+                        <li class="cal-share-item"><a ng-href="https://twitter.com/intent/tweet?url={{::eventDetailsCtl.bitlyShareUrl}}&text=Check%20out%20{{::eventDetailsCtl.event.prodName}}%3A&via=ENQThingsToDo" class="cal-share-link cal-share-tw" target="_blank"><span class="cal-share-name">Twitter</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+
+    <div class="cal-ad-container cal-ad-300 cal-mobile">
+        <div data-ng-dfp-ad='div-gpt-ad-1473030352176-0' data-ng-dfp-ad-hide-when-empty></div>
+    </div>
+
+    <div class="cal-listing-wrapper cal-mid-wrapper">
+
+        <section class="cal-listing-location" ng-if="eventDetailsCtl.event.apiVenue">
+
+            <h2 class="cal-heading cal-section-title cal-desktop">Location</h2>
+
+            <div class="cal-venue-map" id="cal-map">
+                <iframe class="cal-venue-map-embed" ng-src="{{::eventDetailsCtl.event.mapEmbed}}" frameborder=0 allowfullscreen></iframe>
+            </div>
+           
+            <div class="cal-map-wrapper">
+
+                <p class="cal-listing-item cal-address" itemprop="location" itemscope itemtype="http://schema.org/Place">
+                    <span class="cal-venue-name" ng-bind-html="::eventDetailsCtl.event.apiVenue.venueName" itemprop="name"></span><br>
+                    <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                        <span class="cal-venue-street" ng-bind-html="::eventDetailsCtl.event.apiVenue.venueAddress" itemprop="streetAddress"></span><br>
+                        <span class="cal-venue-locality">
+                            <span itemprop="addressLocality">{{::eventDetailsCtl.event.apiVenue.venueCity}},</span> 
+                            <span itemprop="addressRegion">{{::eventDetailsCtl.event.apiVenue.venueState}}</span> 
+                            <span itemprop="postalCode">{{::eventDetailsCtl.event.apiVenue.venueZip}}</span>
+                        </span><br>
+                    </span>
+                    <span class="cal-venue-directions"><a ng-href="{{::eventDetailsCtl.event.directionsLink}}" target="_blank" class="cal-link">Get directions</a></span>
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="cal-listing-details">
+
+            <h2 class="cal-heading cal-section-title cal-desktop">Details</h2>
+
+            <div ng-if="eventDetailsCtl.event.prodPricingInfo">
+                <h3 class="cal-heading cal-detail-title">Cost</h3>
+                <p class="cal-detail-info">{{::eventDetailsCtl.event.prodPricingInfo}}</p>
+            </div>
+
+            <div ng-if="eventDetailsCtl.event.goodFor && eventDetailsCtl.event.goodFor.toLowerCase() !== 'everyone'">
+                <h3 class="cal-heading cal-detail-title">Good for</h3>
+                <p class="cal-detail-info">{{::eventDetailsCtl.event.goodFor}}</p>
+            </div>
+
+            <div ng-if="eventDetailsCtl.event.apiVenue.venueParkingInfo">
+                <h3 class="cal-heading cal-detail-title">Parking</h3>
+                <p class="cal-detail-info" ng-bind-html="::eventDetailsCtl.event.apiVenue.venueParkingInfo"></p>
+            </div>
+
+            <div ng-if="eventDetailsCtl.event.prodReservationsInfo">
+                <h3 class="cal-heading cal-detail-title">More info</h3>
+                <p class="cal-detail-info">{{::eventDetailsCtl.event.prodReservationsInfo}}</p>
+            </div>
+
+            <p class="cal-listing-action"><a ng-href="/feedback/{{::eventDetailsCtl.event.prodID}}/{{::eventDetailsCtl.event.prodName | urlencode}}{{::'?' | chromeless}}" class="cal-link">Improve this listing</a></p>
+
+        </section>
+
+    </div>
+
+    <section class="cal-listing-more">
+
+        <h2 class="cal-heading cal-section-title">Find More Events</h2>
+
+        <ul class="cal-more-list">
+            <li class="cal-more-item"><a class="cal-link cal-more-link cal-more-cat" ng-href="/?catIds={{::eventDetailsCtl.event.catID}}{{::'&' | chromeless}}">By category</a></li>
+            <li class="cal-more-item"><a class="cal-link cal-more-link cal-more-nearby" ng-href="/?location={{::eventDetailsCtl.event.apiVenue.venueCinNeighborhood}}{{::'&' | chromeless}}">Nearby</a></li>
+            <li class="cal-more-item"><a class="cal-link cal-more-link cal-more-venue" ng-href="/venue/{{::eventDetailsCtl.event.apiVenue.venueID}}/{{::eventDetailsCtl.event.apiVenue.venueName | urlencode}}{{::'?' | chromeless}}">At venue</a></li>
+            <li class="cal-more-item"><a class="cal-link cal-more-link cal-more-presenter" ng-href="/presenter/{{::eventDetailsCtl.event.apiPresenter.presID}}/{{::eventDetailsCtl.event.apiPresenter.presName | urlencode}}{{::'?' | chromeless}}">By presenter</a></li>
+         </ul>
+     </section>
+        </ul>
+
+    </section>
+
+    <p class="cal-listing-back"><a ng-href="/{{::'?' | chromeless}}" class="cal-link cal-back-link" window-history><span class="cal-desktop">Back to results</span></a></p>
+
+</article>
+
+<div class="cal-right-col cal-listing-right cal-desktop">
+
+    <div class="cal-ad-container cal-ad-300">
+        <div data-ng-dfp-ad='div-gpt-ad-1473030181891-0' data-ng-dfp-ad-hide-when-empty></div>
+    </div>
+
+    <aside class="cal-listing-related" ng-if="eventDetailsCtl.relatedEvents.length > 0">	
+        <h2 class="cal-heading cal-section-title">You Might Also Like</h2>
+
+        <div class="cal-related" ng-repeat="eventItem in eventDetailsCtl.relatedEvents">
+            <a ng-href="/event/{{::eventItem.prodID}}/{{::eventItem.prodName | urlencode}}{{::'?'  |chromeless}}" class="cal-result-link">
+                <h3 class="cal-heading cal-related-title">{{::eventItem.prodName}}</h3>
+                <div class="cal-related-frame cal-thumb-container cal-crop" ng-if="eventItem.venuePhoto">
+                    <img ng-src="{{::eventItem.venuePhoto}}" class="cal-related-photo cal-thumb">
+                </div>
+                <p class="cal-related-location">
+                    <span class="cal-related-venue" ng-bind-html="::eventItem.venueName"></span>
+                    <span class="cal-related-neighborhood">{{::eventItem.venueCinNeighborhood}}{{eventItem.venueState !== 'OH' ? ', ' + eventItem.venueState : ''}}</span>
+                </p>
+            </a>
+        </div>
+
+    </aside>
+    <div class="cal-ad-container cal-ad-300">   
+        <div data-ng-dfp-ad='div-gpt-ad-1473030273967-0' data-ng-dfp-ad-hide-when-empty></div>
+    </div>
+
+</div> 

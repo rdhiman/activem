@@ -1,0 +1,3 @@
+[submodule "ldsn-node-deployment-client"]
+	path = ldsn-node-deployment-client
+	url = git@github.com:GannettDigital/ldsn-node-deployment-client.git
