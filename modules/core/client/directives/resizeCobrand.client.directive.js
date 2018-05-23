@@ -10,7 +10,7 @@
 
                 angular.element($window).bind('resize', () => {
                     if(!$scope.createdDesktopHeader && $window.innerWidth >= 980) {
-                        $window.MAW.header(desktopId, 'cincinnati', { 'layout': 'header-4' });
+                        //$window.MAW.header(desktopId, 'cincinnati', { 'layout': 'header-4' });
                         $scope.createdDesktopHeader = true;
                     }else if(!$scope.createdMobileHeader && $window.innerWidth < 980){
                         $window.MAW.header(mobileId, 'cincinnati', { 'layout': 'header-1' });

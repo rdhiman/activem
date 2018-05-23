@@ -8,16 +8,16 @@
 
         $stateProvider
             .state('events', {
-                url: '?pageIndex&date&startDate&endDate&superCatIds&catIds&catName&location&keywords&freeOnly&attributeIds&cacheBust',
-                templateUrl: 'core/client/views/events.client.view.html',
-                controller: 'EventsController as eventsCtl',
+                url: '/',
+                templateUrl: 'core/client/views/index.client.view.html',
+                controller: 'GistsController as gistsCtl',
                 resolve: {
-                    eventsList(EventsService, $stateParams) {
-                        return EventsService.getEventsJson({}, $stateParams);
-                    },
-                    weekendEvents(CincinnatiusaService, $stateParams) {
-                        return CincinnatiusaService.getWeekendEventsJson($stateParams.cacheBust);
-                    }
+                    // eventsList(EventsService, $stateParams) {
+                    //     return EventsService.getEventsJson({}, $stateParams);
+                    // },
+                    // weekendEvents(CincinnatiusaService, $stateParams) {
+                    //     return CincinnatiusaService.getWeekendEventsJson($stateParams.cacheBust);
+                    // }
                 }
             })
             .state('eventDetails', {

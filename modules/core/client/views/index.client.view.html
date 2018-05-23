@@ -1,0 +1,67 @@
+<div class="row active-main">
+    <div class="col-md-8">
+        <form>
+              <div class="form-group">
+                <label>Notepad Title</label>
+                <input class="form-control" ng-model="gistsCtl.notepadTitle" placeholder="My notepad title...">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">My Notes</label>
+                <input class="form-control" ng-model="gistsCtl.noteTitle" placeholder="Enter note title...">
+              </div>
+              <div class="form-group">
+                <label >Example textarea</label>
+                <textarea class="form-control" ng-model="gistsCtl.noteText" rows="7"></textarea>
+              </div>
+              <button type="submit" ng-click="gistsCtl.addGist()" class="btn btn-success">Add</button>
+        </form>
+
+        <section class="active-notes">
+            <form>
+                  <div class="form-group">
+                    <input class="form-control" placeholder="Sample Note 1">
+                  </div>
+                  <div class="form-group">
+                    <label >Example textarea</label>
+                    <textarea class="form-control"  rows="7"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-success">Add</button>
+            </form>
+        </section>
+    </div>  
+
+    <div class="col-md-3 active-actions-wrapper">
+        <div class="active-actions pull-right">
+            <button type="button" class="btn btn-outline-secondary" data-toggle="button" aria-pressed="false" autocomplete="off">View Stats</button>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save</button>
+            <button type="button" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Delete</button>
+        </div>
+    </div>   
+</div>  <!-- end of row -->
+
+<!-- <section class="active-main">
+    <form>
+          <div class="form-group">
+            <label>Notepad Title</label>
+            <input class="form-control" placeholder="My notepad title...">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">My Notes</label>
+            <input placeholder="Enter note title...">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Example textarea</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</section>
+
+<section class="active-main-right-column">
+    this is right columns
+
+</section> -->
