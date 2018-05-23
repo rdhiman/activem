@@ -17,6 +17,11 @@
             noteObject.noteText = this.noteText;
             this.GistsService.updateGist(noteObject);
         }
+
+        viewStats() {
+            console.log('view stats called');
+            this.$state.go('statsView');
+        }
     }
 
     angular

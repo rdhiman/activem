@@ -4,9 +4,8 @@
     class GistsService {
         constructor($http) {
             _.merge(this, { $http });
-            this.pageSize = 0;
-            this.eventCategoryName = '';
-            this.queryParams = {};
+
+            this.url = 'api/bitly';
         }
 
         updateGist(noteObject) {
@@ -20,6 +19,10 @@
             }
 
             return this.$http.get('api/events', { params }).then(response => response.data);
+        }
+
+        getGists() {
+            return this.$http.get('https://api.github.com/gists/public').then((response) => response.data);
         }
     }
 
