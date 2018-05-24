@@ -7,18 +7,11 @@
         $urlMatcherFactoryProvider.strictMode(false);
 
         $stateProvider
-            //events
             .state('mainView', {
                 url: '/',
                 templateUrl: 'core/client/views/notes.client.view.html',
                 controller: 'GistsController as gistsCtl',
                 resolve: {
-                    // eventsList(EventsService, $stateParams) {
-                    //     return EventsService.getEventsJson({}, $stateParams);
-                    // },
-                    // weekendEvents(CincinnatiusaService, $stateParams) {
-                    //     return CincinnatiusaService.getWeekendEventsJson($stateParams.cacheBust);
-                    // }
                 }
             })
             .state('statsView', {
@@ -29,15 +22,6 @@
                     gistsData(GistsService) {
                         return GistsService.getGists();
                     }
-                    // eventData(EventsService, $stateParams) {
-                    //     return EventsService.getProductionJson($stateParams.id, $stateParams.cacheBust);
-                    // },
-                    // futureEvents(EventsService, $stateParams) {
-                    //     return EventsService.getProductionDatesJson($stateParams.id, { pageSize: 250, cacheBust: $stateParams.cacheBust });
-                    // },
-                    // relatedEvents(EventsService, eventData, $stateParams) {
-                    //     return EventsService.getEventsJson({ catIds: eventData.catID, excludeProdId: eventData.prodID, pageSize: 5, cacheBust: $stateParams.cacheBust });
-                    // }
                 }
             })
             .state('not-found', {

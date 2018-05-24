@@ -22,6 +22,11 @@ body {
 	.btn {
 		padding-left: 20px;
 		padding-right: 20px;
+		font-size: 14px;
+	}
+
+	input {
+		font-size: 12px;
 	}
 
 	.btn-outline-secondary {
@@ -50,6 +55,9 @@ body {
 			}
 		}
 
+		.my-notes-title {
+			font-size: 18px;
+		}
 
 		.active-actions-wrapper {
 			padding: 25px;
@@ -73,9 +81,9 @@ body {
 	}
 
 	.active-stats {
-		// button {
-		// 	margin-bottom: 30px;
-		// }
+		background-color: #fff;
+		border-radius: 5px;
+		padding: 15px;
 	}
 }
 

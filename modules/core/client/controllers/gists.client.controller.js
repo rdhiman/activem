@@ -7,8 +7,8 @@
             this.notePadTitle = 'Rohits notepad';
             this.notes = [
                 {
-                    noteTitle: '1',
-                    noteText: 'textarea 1'
+                    noteTitle: 'First note',
+                    noteText: 'This is where I enter the the note text'
                 }
             ];
         }
@@ -21,7 +21,8 @@
                     noteText: this.noteText
                 }
             );
-            
+            this.noteTitle = '';
+            this.noteText = '';
         }
 
         viewStats() {
@@ -35,6 +36,10 @@
             noteObject.noteTitle = this.noteTitle;
             noteObject.noteText = this.noteText;
             this.GistsService.updateGist(noteObject);
+        }
+
+        deleteNotes() {
+            this.$state.go('.', this.$state.params, { reload: true });
         }
     }
 

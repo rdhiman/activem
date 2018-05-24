@@ -18,7 +18,7 @@
 
             _.each(scope.gistsData, item => {
                 let graphObject = {};
-                graphObject.time = $filter('date')(item.created_at, "mm"); //moment(Date.parse(item.created_at));
+                graphObject.time = $filter('date')(item.created_at, 'mm');
                 graphObject.count = 1;
                 data.push(graphObject);
             });
@@ -33,7 +33,7 @@
                     bottom: 20,
                     left: 50
                 },
-                xScale = d3.scaleLinear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([20, 30]),
+                xScale = d3.scaleLinear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0, 60]),
                 yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, 1]),
                 xAxis = d3.axisBottom(xScale),
                 yAxis = d3.axisLeft(yScale);
@@ -60,6 +60,7 @@
                     .attr('stroke-width', 2)
                     .attr('fill', 'none');
             }
+            
             InitChart();
         }
     }

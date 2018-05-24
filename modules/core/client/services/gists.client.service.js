@@ -9,10 +9,13 @@
         }
 
         updateGist(noteObject) {
-            console.log(noteObject);
-            this.$http.post(
-                'https://api.github.com/gists/',
-                {
+            var req = {
+                method: 'POST',
+                url: 'https://api.github.com/gists/',
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: {
                     'description': 'POSTING FROM EXPRESS',
                     'public': true,
                     'files': {
@@ -21,11 +24,11 @@
                         }
                     }
                 }
-            )
-            .then(function (response) {
+            };
+
+            this.$http(req).then(function (response) {
                 console.log(response);
-            })
-            .catch(function (error) { 
+            }).catch(function (error) {
                 console.log(error);
             });
         }
