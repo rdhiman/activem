@@ -1,8 +1,4 @@
 @import 'colors';
-@import 'fonts';
-@import 'addtocalendar';
-@import 'feedback';
-@import 'error';
 
 *,
 *:before,
@@ -19,6 +15,9 @@ label {
 
 body {
 	font-family: Arial;
+	background-color: #eee;
+	padding: 20px;
+
 	.btn {
 		padding-left: 20px;
 		padding-right: 20px;
@@ -50,9 +49,9 @@ body {
 		margin-bottom: 15px;
 	}
 
-	background-color: #eee;
-	padding: 20px;
-
+	.note-description {
+		height: 125px !important;
+	}
 
 	.active-main {
 		background-color: #fff;
@@ -61,6 +60,8 @@ body {
 
 
 		form {
+			width: 80%;
+
 			.form-control {
 				height: 24px;
 				width: 100%;
@@ -76,8 +77,16 @@ body {
 		}
 
 		.active-notes {
-			form {
-				padding-top: 20px;
+			.note {
+				.delete-note {
+					width: 20%;
+					display: inline-block;
+				}
+				form {
+					padding-top: 20px;
+					width: 80%;
+					display: inline-block;
+				}	
 			}
 		}
 	}
