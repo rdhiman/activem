@@ -12,6 +12,9 @@
                 templateUrl: 'core/client/views/notes.client.view.html',
                 controller: 'GistsController as gistsCtl',
                 resolve: {
+                    locaNotesData(GistsService) {
+                        return GistsService.getLocalNotes();
+                    }
                 }
             })
             .state('statsView', {

@@ -14,6 +14,7 @@
         };
 
         function link(scope, element, attr) {
+            //console.log(scope.gistsData);
             let data = [];
 
             _.each(scope.gistsData, item => {
@@ -22,7 +23,7 @@
                 graphObject.count = 1;
                 data.push(graphObject);
             });
-
+            console.log(data);
             function InitChart() {
                 var vis = d3.select('#visualisation'),
                     WIDTH = 1000,

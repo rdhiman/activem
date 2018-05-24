@@ -2,16 +2,15 @@
     'use strict';
 
     class GistsService {
-        constructor($http) {
-            _.merge(this, { $http });
-
-            this.url = 'api/bitly';
+        constructor($http, $window) {
+            _.merge(this, { $http, $window });
+            this.localStorageClientId = 'activemLocalStorage';
         }
 
         updateGist(noteObject) {
             var req = {
                 method: 'POST',
-                url: 'https://api.github.com/gists/',
+                url: 'https://api.github.com/gists',
                 headers: {
                     'Content-Type': undefined
                 },
@@ -35,6 +34,17 @@
 
         getGists() {
             return this.$http.get('https://api.github.com/gists/public').then((response) => response.data);
+        }
+
+        saveNoteLocally(notepadTitle, notesObject) {
+            let localNoteObject = {};
+            localNoteObject.notepadTitle = notepadTitle;
+            localNoteObject.notes = notesObject;
+            this.$window.localStorage.setItem(this.localStorageClientId, JSON.stringify(localNoteObject));
+        }
+
+        getLocalNotes() {
+            return JSON.parse(this.$window.localStorage.getItem(this.localStorageClientId));
         }
     }
 

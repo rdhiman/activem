@@ -2,15 +2,10 @@
     'use strict';
 
     class GistsController {
-        constructor($stateParams, $state, GistsService, $window) {
+        constructor($stateParams, $state, GistsService, $window, locaNotesData) {
             _.assign(this, { $stateParams, $state, GistsService, $window });
-            this.notePadTitle = 'Rohits notepad';
-            this.notes = [
-                {
-                    noteTitle: 'First note',
-                    noteText: 'This is where I enter the the note text'
-                }
-            ];
+            this.notepadTitle = locaNotesData.notepadTitle;
+            this.notes = locaNotesData.notes;
         }
 
 
@@ -34,7 +29,7 @@
             noteObject.notepadTitle = this.notepadTitle;
             noteObject.noteTitle = this.noteTitle;
             noteObject.noteText = this.noteText;
-            this.GistsService.updateGist(noteObject);
+            this.GistsService.saveNoteLocally(this.notepadTitle, this.notes);
         }
 
         deleteNotes() {
