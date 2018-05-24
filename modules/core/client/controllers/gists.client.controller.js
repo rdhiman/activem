@@ -3,9 +3,13 @@
 
     class GistsController {
         constructor($stateParams, $state, GistsService, $window, locaNotesData) {
-            _.assign(this, { $stateParams, $state, GistsService, $window });
-            this.notepadTitle = locaNotesData.notepadTitle;
-            this.notes = locaNotesData.notes;
+            _.assign(this, { $stateParams, $state, GistsService, $window, locaNotesData });
+            console.log(this.localNotesData);
+            this.notepadTitlePlaceHolder = locaNotesData.notepadTitle || 'My notepad title...';
+            //this.notepadTitle = locaNotesData.notepadTitle ? locaNotesData.notepadTitle : 'My notepad title...';
+            this.notepadTitle = locaNotesData.notepadTitle ? locaNotesData.notepadTitle : 'My notepad title...';
+           //this.notepadTitle = locaNotesData.notepadTitle || 'something';
+            this.notes = locaNotesData.notes || [];
         }
 
 
@@ -29,10 +33,12 @@
             noteObject.notepadTitle = this.notepadTitle;
             noteObject.noteTitle = this.noteTitle;
             noteObject.noteText = this.noteText;
+            console.log(noteObject);
             this.GistsService.saveNoteLocally(this.notepadTitle, this.notes);
         }
 
         deleteNotes() {
+            this.GistsService.deleteLocalNotes();
             this.$state.go('.', this.$state.params, { reload: true });
         }
     }

@@ -44,7 +44,16 @@
         }
 
         getLocalNotes() {
-            return JSON.parse(this.$window.localStorage.getItem(this.localStorageClientId));
+            let localStorageData = this.$window.localStorage.getItem(this.localStorageClientId);
+            if (localStorageData !== null) {
+                return JSON.parse(this.$window.localStorage.getItem(this.localStorageClientId));
+            } else {
+                return {};
+            }
+        }
+
+        deleteLocalNotes() {
+            this.$window.localStorage.removeItem(this.localStorageClientId);
         }
     }
 
