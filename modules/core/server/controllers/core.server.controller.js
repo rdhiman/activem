@@ -1,7 +1,6 @@
 'use strict';
 
-import { getProduction, getPresenter, getVenue } from '../services/events.server.service';
-import { getCache, setCache } from '../services/cache.server.service';
+
 const moment = require('moment');
 const cacheTimeInMinutes = 15;
 
@@ -17,58 +16,7 @@ exports.renderIndex = (req, res) => {
     let chromeless = req.query.chromeless === 'true' ? true : false;
     let urlPath = req.params[0];
     let urlParts = [];
-    let cacheBust = req.query.cacheBust;
-    if (/(event|venue|presenter)\//.test(urlPath)) {
-        urlParts = urlPath.split('/');
-    }
-    if (urlParts[0] === 'event') {
-        getCache(urlParts[1]).then(response => {
-            if(cacheBust !== 'true' && response && moment().isBefore(moment(response.date).add(cacheTimeInMinutes, 'minutes'))) {
-                renderServerIndex(res, chromeless, response.json.prodName, response.json.prodDescription, urlPath, response.json.apiVenue.venuePhoto);
-            } else {
-                getProduction(urlParts[1]).then(response => {
-                    if (response.error){
-                        res.redirect('/not-found');
-                    } else {
-                        renderServerIndex(res, chromeless, response.prodName, response.prodDescription, urlPath, response.apiVenue.venuePhoto);
-                        setCache(urlParts[1], response);
-                    }
-                });
-            }
-        });
-    } else if (urlParts[0] === 'venue') {
-        getCache(urlParts[1]).then(response => {
-            if(cacheBust !== 'true' && response && moment().isBefore(moment(response.date).add(cacheTimeInMinutes, 'minutes'))) {
-                renderServerIndex(res, chromeless, response.json.venueName, response.json.venueDescription, urlPath, response.venuePhoto);
-            } else {
-                getVenue(urlParts[1]).then(response => {
-                    if (response.error){
-                        res.redirect('/not-found');
-                    } else {                
-                        renderServerIndex(res, chromeless, response.venueName, response.venueDescription, urlPath, response.venuePhoto);
-                        setCache(urlParts[1], response);
-                    }
-                });
-            }
-        });
-    } else if (urlParts[0] === 'presenter') {
-        getCache(urlParts[1]).then(response => {
-            if(cacheBust !== 'true' && response && moment().isBefore(moment(response.date).add(cacheTimeInMinutes, 'minutes'))) {
-                renderServerIndex(res, chromeless, response.json.presName, response.json.presDescription, urlPath);
-            } else {
-                getPresenter(urlParts[1]).then(response => {
-                    if (response.error){
-                        res.redirect('/not-found');
-                    } else {
-                        renderServerIndex(res, chromeless, response.presName, response.presDescription, urlPath);
-                        setCache(urlParts[1], response);
-                    }
-                });
-            }
-        });
-    } else {
-        res.render('modules/core/server/views/index', { chromeless });
-    }
+    res.render('modules/core/server/views/index', { chromeless });
 };
 
 /**

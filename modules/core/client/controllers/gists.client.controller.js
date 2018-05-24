@@ -26,7 +26,6 @@
         }
 
         viewStats() {
-            console.log('view stats called');
             this.$state.go('statsView');
         }
 

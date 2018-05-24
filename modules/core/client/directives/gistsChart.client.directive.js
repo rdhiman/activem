@@ -28,15 +28,15 @@
                     WIDTH = 1000,
                     HEIGHT = 500,
                     MARGINS = {
-                    top: 20,
-                    right: 20,
-                    bottom: 20,
-                    left: 50
-                },
-                xScale = d3.scaleLinear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0, 60]),
-                yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, 1]),
-                xAxis = d3.axisBottom(xScale),
-                yAxis = d3.axisLeft(yScale);
+                        top: 20,
+                        right: 20,
+                        bottom: 20,
+                        left: 50
+                    },
+                    xScale = d3.scaleLinear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([0, 60]),
+                    yScale = d3.scaleLinear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0, 1]),
+                    xAxis = d3.axisBottom(xScale),
+                    yAxis = d3.axisLeft(yScale);
 
                 vis.append('svg:g')
                     .attr('class', 'x axis')

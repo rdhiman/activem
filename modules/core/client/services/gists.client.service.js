@@ -19,7 +19,7 @@
                     'description': 'POSTING FROM EXPRESS',
                     'public': true,
                     'files': {
-                            'file1.txt': {
+                        'file1.txt': {
                             'content': 'EXPRESS'
                         }
                     }
