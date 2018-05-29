@@ -80,12 +80,17 @@ body {
 			.note {
 				.delete-note {
 					width: 20%;
-					display: inline-block;
+				    display: inline-block;
+				    float: left;
+				    position: relative;
+				    text-align: right;
+				    top: 20px;
 				}
 				form {
 					padding-top: 20px;
-					width: 80%;
-					display: inline-block;
+					//width: 80%;
+					float: left;
+					//display: inline-block;
 				}	
 			}
 		}

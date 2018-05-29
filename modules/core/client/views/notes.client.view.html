@@ -29,7 +29,7 @@
                       </div>
                 </form>
                 <div class="delete-note">
-                  <button type="submit" class="btn btn-danger">Delete</button>
+                  <button type="submit" ng-click="gistsCtl.deleteNote($index)" class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </section>
@@ -39,7 +39,7 @@
         <div class="active-actions pull-right">
             <button type="submit" ng-click="gistsCtl.viewStats()" class="btn btn-outline-secondary" data-toggle="button">View Stats</button>
             <button type="button" ng-click="gistsCtl.saveGist()" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Save</button>
-            <button type="button" ng-click="gistsCtl.deleteNotes()" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Delete</button>
+            <button type="button" ng-click="gistsCtl.deleteNotePad()" class="btn btn-danger" data-toggle="button" aria-pressed="false" autocomplete="off">Delete</button>
         </div>
     </div>   
 </div>

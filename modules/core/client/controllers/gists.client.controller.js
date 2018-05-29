@@ -7,6 +7,7 @@
             this.notepadTitlePlaceHolder = locaNotesData.notepadTitle || 'My notepad title...';
             this.notepadTitle = locaNotesData.notepadTitle ? locaNotesData.notepadTitle : 'My notepad title...';
             this.notes = locaNotesData.notes || [];
+            console.log(this.notes);
         }
 
 
@@ -33,7 +34,11 @@
             this.GistsService.saveNoteLocally(this.notepadTitle, this.notes);
         }
 
-        deleteNotes() {
+        deleteNote(index) {
+            this.notes.splice(index, 1);
+        }
+
+        deleteNotePad() {
             this.GistsService.deleteLocalNotes();
             this.$state.go('.', this.$state.params, { reload: true });
         }
